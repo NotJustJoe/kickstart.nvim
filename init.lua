@@ -475,10 +475,6 @@ require('lazy').setup({
         -- Load luvit types when the `vim.uv` word is found
         { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
       },
-      integrations = {
-        -- Enable blink.cmp integration
-        blink = true,
-      },
     },
   },
   {
@@ -677,6 +673,20 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
+        -- clangd = {},
+        -- gopls = {},
+        -- pyright = {},
+        -- rust_analyzer = {},
+        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
+        --
+        -- Some languages (like typescript) have entire language plugins that can be useful:
+        --    https://github.com/pmizio/typescript-tools.nvim
+        --
+        -- But for many setups, the LSP (`ts_ls`) will work just fine
+        -- ts_ls = {},
+        --
+
+        -- Your custom language servers (keep these enabled)
         clangd = {},
         pyright = {},
         bashls = {},
@@ -690,15 +700,8 @@ require('lazy').setup({
         jdtls = {},
         svelte = {},
         gopls = {},
-        zls = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
-        --
+        zls = {}, -- Zig Language Server
+
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
@@ -856,7 +859,6 @@ require('lazy').setup({
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
       },
 
-
       appearance = {
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned
@@ -872,15 +874,7 @@ require('lazy').setup({
       sources = {
         default = { 'lsp', 'path', 'snippets', 'lazydev' },
         providers = {
-          lazydev = { 
-            name = 'LazyDev', 
-            module = 'lazydev.integrations.blink',
-            score_offset = 100,
-            -- Only activate in lua files
-            enabled = function(ctx)
-              return vim.bo[ctx.bufnr].filetype == 'lua'
-            end,
-          },
+          lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         },
       },
 
